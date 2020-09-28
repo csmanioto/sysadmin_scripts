@@ -33,7 +33,7 @@ install_dependences(){
         $PGK install libterm-readkey-perl
         $PGK install iftop
         $PGK install git
-        $PGK install libdbd-mysql-perl
+	$PGK install libdbd-mysql-perl
         $PGK remove --purge -y percona-xtradb-cluster-server-5.7 percona-xtradb-cluster-garbd-5.7 percona-xtradb-cluster-common-5.7 percona-xtradb-cluster-client-5.7 percona-xtrabackup-24 percona-release
 		$PGK remove --purge -y mysql-common mysql-server
 		rm -rf /etc/mysql
