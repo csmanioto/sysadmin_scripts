@@ -70,20 +70,25 @@ install_dependences(){
 }
 
 
-
 install_mysql(){
-		adduser mysql
-		echo " Fazendo download do MYSQL 8 "
-		cd /usr/local/
-		wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
-		#wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-test-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
-		#tar -xvf mysql-test-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
-		tar -xvf mysql-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
-		ln -sf mysql-8.0.21-linux-glibc2.17-x86_64-minimal mysql
-		cd -
+                adduser mysql
+                echo " Fazendo download do MYSQL 5.7 "
+                cd /usr/local/
+                wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
+                wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-test-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
+                #tar -xvf mysql-test-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
+                tar -xvf mysql-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
+                ln -sf mysql-8.0.21-linux-glibc2.17-x86_64-minimal mysql
 
-		echo "PATH=$PATH:/usr/local/mysql/bin" >> /etc/profile.d/mysql.sh
-		chmod 755 /etc/profile.d/mysql.sh
+                wget https://cdn.mysql.com//Downloads/MySQL-Shell/mysql-shell-8.0.21-linux-glibc2.12-x86-64bit.tar.gz
+                tar -zxvf mysql-shell-8.0.21-linux-glibc2.12-x86-64bit.tar.gz
+                ln -sf mysql-shell-8.0.21-linux-glibc2.12-x86-64bit mysql-shell
+                cd -
+
+                echo "PATH=$PATH:/usr/local/mysql/bin" > /etc/profile.d/mysql.sh
+                echo "PATH=$PATH:/usr/local/mysql-shell/bin" >> /etc/profile.d/mysql.sh
+                echo "export MYSQLSH_PROMPT_THEME=/usr/local/mysql-shell/share/mysqlsh/prompt/prompt_256.json" >> /etc/profile.d/mysql.sh
+                chmod 755 /etc/profile.d/mysql.sh
 }
 
 
