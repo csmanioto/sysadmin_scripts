@@ -119,170 +119,110 @@ install_my_cnf (){
 	MEM_TOTAL=$(free -m|grep "Mem:"|awk '{ print $2}')
 	BUFFER_POOL=$(expr ${MEM_TOTAL} \* $BUFFER_POOL_PORCENT / 100 / 1024)
 
-	echo "###########" > /databases/mysql/my.cnfqcd /
-	echo "## By Carlos Smaniotto" >> /databases/mysql/my.cnf
-	echo "### my.cnf" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "[client]" >> /databases/mysql/my.cnf
-	echo "port            = 3307" >> /databases/mysql/my.cnf
-	echo "socket          = /databases/mysql/mysql.sock" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "[mysqld_safe]" >> /databases/mysql/my.cnf
-	echo "basedir        = /usr/local/mysql" >> /databases/mysql/my.cnf
-	echo "timezone        = America/Sao_Paulo" >> /databases/mysql/my.cnf
-	echo "socket          = /databases/mysql/mysql.sock" >> /databases/mysql/my.cnf
-	echo "nice            = 0" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "# LOGS e Slow Query" >> /databases/mysql/my.cnf
-	echo "log-error       = /databases/mysql/logs/error.log" >> /databases/mysql/my.cnf
-	echo "pid-file        = /databases/mysql/bases/mysql.pid" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "[mysqld]" >> /databases/mysql/my.cnf
-	echo "general_log     = 1" >> /databases/mysql/my.cnf
-	echo "log_warnings    = 1" >> /databases/mysql/my.cnf
-	echo "general_log_file = /databases/mysql/logs/mysqld.log" >> /databases/mysql/my.cnf
-	echo "log-error       = /databases/mysql/logs/error.log" >> /databases/mysql/my.cnf
-	echo "log-slow-admin-statements = 0" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "user            = mysql" >> /databases/mysql/my.cnf
-	echo "pid-file        = /databases/mysql/bases/mysql.pid" >> /databases/mysql/my.cnf
-	echo "socket          = /databases/mysql/mysql.socket" >> /databases/mysql/my.cnf
-	echo "port            = 3307" >> /databases/mysql/my.cnf
-	echo "basedir        = /usr/local/mysql" >> /databases/mysql/my.cnf
-	echo "datadir         = /databases/mysql/bases/" >> /databases/mysql/my.cnf
-	echo "tmpdir          = /databases/mysql/tmpdir" >> /databases/mysql/my.cnf
-	echo "lc-messages-dir = /usr/local/mysql/share/" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "# Performance Analsys" >> /databases/mysql/my.cnf
-	echo "performance_schema = on" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "# HARDELING" >> /databases/mysql/my.cnf
-	echo "# Desativa o LOAD FILE" >> /databases/mysql/my.cnf
-	echo "local-infile = 0" >> /databases/mysql/my.cnf
-	echo "old_passwords=0" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "# Enterprise plugin" >> /databases/mysql/my.cnf
-	echo "#plugin-load=authentication_pam.so;thread_pool.so" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "#thread_pool_size = 36" >> /databases/mysql/my.cnf
-	echo "#thread_pool_stall_limit = 100" >> /databases/mysql/my.cnf
-	echo "#thread_pool_prio_kickup_timer = 1000" >> /databases/mysql/my.cnf
-	echo "#thread_pool_max_unused_threads = 0" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "# HugTLB" >> /databases/mysql/my.cnf
-	echo "#large-pages" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "# 0x = MASTER" >> /databases/mysql/my.cnf
-	echo "# 1x = Slave Level 1" >> /databases/mysql/my.cnf
-	echo "# 2x = Slave em baixo de Slave" >> /databases/mysql/my.cnf
-	echo "server-id=03" >> /databases/mysql/my.cnf
-
-	echo "#Slave Setup" >> /databases/mysql/my.cnf
-	echo "slave-skip-errors = 1062,1032,1452" >> /databases/mysql/my.cnf
-	echo "relay-log = /databases/mysql/binlog/relay/mysql-relay-bin" >> /databases/mysql/my.cnf
-	echo "read_only = 0" >> /databases/mysql/my.cnf
-	echo "relay-log-space-limit=14G" >> /databases/mysql/my.cnf
-	echo "relay-log-recovery" >> /databases/mysql/my.cnf
-
-	echo "# Master Setup" >> /databases/mysql/my.cnf
-	echo "binlog_format = ROW" >> /databases/mysql/my.cnf
-	echo "log-bin        = /databases/mysql/binlog/mysql-bin" >> /databases/mysql/my.cnf
-	echo "log_slave_updates = 1" >> /databases/mysql/my.cnf
-	echo "log_bin_trust_function_creators = 1" >> /databases/mysql/my.cnf
-	echo "expire_logs_days = 1" >> /databases/mysql/my.cnf
-
-	echo "# Configuracoes Diversas" >> /databases/mysql/my.cnf
-	echo "#Compatibilidade" >> /databases/mysql/my.cnf
-	echo "sql_mode = ''" >> /databases/mysql/my.cnf
-
-	echo "#skip-name-resolve" >> /databases/mysql/my.cnf
-	echo "max_connections = 100" >> /databases/mysql/my.cnf
-	echo "query_cache_size = 100M" >> /databases/mysql/my.cnf
-	echo "query_cache_type = 1" >> /databases/mysql/my.cnf
-	echo "sort_buffer_size = 1M" >> /databases/mysql/my.cnf
-	echo "read_buffer_size = 64k" >> /databases/mysql/my.cnf
-	echo "join_buffer_size = 1M" >> /databases/mysql/my.cnf
-	echo "myisam_sort_buffer_size = 28M" >> /databases/mysql/my.cnf
-	echo "bulk_insert_buffer_size = 64M" >> /databases/mysql/my.cnf
-	echo "max_allowed_packet = 1024M" >> /databases/mysql/my.cnf
-	echo "open-files-limit= 1048576" >> /databases/mysql/my.cnf
-	echo "thread_cache_size = 100" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "# Temporary Table" >> /databases/mysql/my.cnf
-	echo "        # Configura o tamanho maximo para tabela do tipo MEMORY" >> /databases/mysql/my.cnf
-	echo "        max_heap_table_size = 512M" >> /databases/mysql/my.cnf
-	echo "        # Configura o tamanho maximo antes de converter para MyISAM" >> /databases/mysql/my.cnf
-	echo "        tmp_table_size = 1G" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "# Federated Store Engine" >> /databases/mysql/my.cnf
-	echo "federated" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "# MyISAM Store Engine" >> /databases/mysql/my.cnf
-	echo "key_buffer = 128M" >> /databases/mysql/my.cnf
-	echo "myisam_repair_threads = 1" >> /databases/mysql/my.cnf
-	echo "myisam_recover = FORCE" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "# InnoDB (Default)" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-	echo "        # Depreciado na 5.6 - Armazena dicionario de dados na ram" >> /databases/mysql/my.cnf
-	echo "        # innodb_additional_mem_pool_size = 16M" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "        # BUFFER POOL" >> /databases/mysql/my.cnf
-	echo "        # Faz  pre-load do buffer pool no startup" >> /databases/mysql/my.cnf
-	echo "        innodb_buffer_pool_load_at_startup=OFF" >> /databases/mysql/my.cnf
-	echo "        innodb_buffer_pool_size = ${BUFFER_POOL}G" >> /databases/mysql/my.cnf
-	echo "        # Segregacao do buffer_pool - Performance para algoritmo LRU (qtd cpu)" >> /databases/mysql/my.cnf
-	echo "        innodb_buffer_pool_instance = 3" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "        # Porcentagem de Paginas Sujas permitida" >> /databases/mysql/my.cnf
-	echo "        # Configuravel em realtime" >> /databases/mysql/my.cnf
-	echo "        # Faz flush das paginas vizinhas junto, economizando I/O" >> /databases/mysql/my.cnf
-	echo "        innodb_flush_neighbors" >> /databases/mysql/my.cnf
-	echo "        # Define o que o flush das dirty pages seja ajustada conforme o workload" >> /databases/mysql/my.cnf
-	echo "        innodb_adaptive_flushing" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "        # Redo Log" >> /databases/mysql/my.cnf
-	echo "        innodb_log_buffer_size = 1G" >> /databases/mysql/my.cnf
-	echo "        innodb_log_group_home_dir = /databases/mysql/innolog" >> /databases/mysql/my.cnf
-	echo "        innodb_log_files_in_group = 2" >> /databases/mysql/my.cnf
-	echo "        innodb_log_file_size = 2024M" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-
-	echo "        # Manipulacao de arquivos" >> /databases/mysql/my.cnf
-	echo "        innodb_open_files = 1048576" >> /databases/mysql/my.cnf
-	echo "        innodb_file_per_table = 1" >> /databases/mysql/my.cnf
-	echo "        innodb_data_file_path = ibdata1:1G:autoextend" >> /databases/mysql/my.cnf
-	echo "        innodb_data_home_dir=/databases/mysql/bases/" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-	echo "        # O_DIRECT para fazer by-pass (O EBS controla)" >> /databases/mysql/my.cnf
-	echo "        innodb_flush_method = O_DIRECT" >> /databases/mysql/my.cnf
-	echo "        innodb_file_format = BARRACUDA" >> /databases/mysql/my.cnf
-	echo "        # QTD de IOPS que esta disponível para o datadir" >> /databases/mysql/my.cnf
-	echo "        innodb_io_capacity = 1000" >> /databases/mysql/my.cnf
-	echo "" >> /databases/mysql/my.cnf
-	echo "        # Controle Transacional" >> /databases/mysql/my.cnf
-	echo "        transaction-isolation=READ-COMMITTED" >> /databases/mysql/my.cnf
-	echo "        innodb_support_xa = 0" >> /databases/mysql/my.cnf
-	echo "        # Qtd de segundos antes de um Lock wait timeout exceeded" >> /databases/mysql/my.cnf
-	echo "        innodb_lock_wait_timeout = 120" >> /databases/mysql/my.cnf
+	echo "###########" 						> /databases/mysql/my.cnf
+	echo "## By Carlos Smaniotto" 					>> /databases/mysql/my.cnf 
+	echo "### my.cnf" 						>> /databases/mysql/my.cnf 
+	echo "" 							>> /databases/mysql/my.cnf 
+	echo ""								>> /databases/mysql/my.cnf 
+	echo "[client]" 						>> /databases/mysql/my.cnf 
+	echo "     port = 3306" 					>> /databases/mysql/my.cnf
+	echo "    socket = /databases/mysql/mysql.socket" 		>> /databases/mysql/my.cnf
+	echo "" 							>> /databases/mysql/my.cnf
+	echo "     [mysqld_safe]" 					>> /databases/mysql/my.cnf
+	echo "     timezone = America/Sao_Paulo" 			>> /databases/mysql/my.cnf
+	echo "     socket = /databases/mysql/mysql.socket" 		>> /databases/mysql/my.cnf
+	echo "     nice = 0" 						>> /databases/mysql/my.cnf
+	echo "" 							>> /databases/mysql/my.cnf
+	echo "     # LOGS e Slow Query" 				>> /databases/mysql/my.cnf
+	echo "     log-error = /databases/mysql/logs/error.log"		>> /databases/mysql/my.cnf
+	echo "     pid-file = /databases/mysql/bases/mysql.pid" 	>> /databases/mysql/my.cnf
+	echo "" 							>> /databases/mysql/my.cnf
+	echo "     [mysql]" 						>> /databases/mysql/my.cnf
+	echo "	prompt=(\\u@\\h) [\\d]>\\_" 				>> /databases/mysql/my.cnf
+	echo "" 							>> /databases/mysql/my.cnf
+	echo "[mysqld]" 						>> /databases/mysql/my.cnf
+	echo "# Geral" 							>> /databases/mysql/my.cnf
+	echo "    port = 3306" 						>> /databases/mysql/my.cnf
+	echo "    max_connections= 10000" 				>> /databases/mysql/my.cnf
+	echo "    table_open_cache =  30000" 				>> /databases/mysql/my.cnf
+	echo "    table_open_cache_instances =  32" 			>> /databases/mysql/my.cnf
+	echo "    open_files_limit = 1048576" 				>> /databases/mysql/my.cnf
+	echo "    max_allowed_packet =  1024M" 				>> /databases/mysql/my.cnf
+	echo "    skip_name_resolve = 1" 				>> /databases/mysql/my.cnf
+	echo "" 							>> /databases/mysql/my.cnf
+	echo "    tmpdir = /databases/mysql/tmpdir" 			>> /databases/mysql/my.cnf
+	echo "    lc-messages-dir = /usr/local/mysql/share/" 		>> /databases/mysql/my.cnf
+	echo "    # LOG" 						>> /databases/mysql/my.cnf
+	echo "    general_log_file = /databases/mysql/logs/general_log.log" >> /databases/mysql/my.cnf
+	echo "    log-error = /databases/mysql/logs/error.log" 		>> /databases/mysql/my.cnf
+	echo "    general_log = 1" 					>> /databases/mysql/my.cnf
+	echo "    log_warnings = 1" 					>> /databases/mysql/my.cnf
+	echo "" 							>> /databases/mysql/my.cnf
+	echo "    pid-file = /databases/mysql/bases/mysqld.pid" 	>> /databases/mysql/my.cnf
+	echo "    socket = /databases/mysql/mysqld.sock" 		>> /databases/mysql/my.cnf
+	echo "    datadir = /databases/mysql/bases" 			>> /databases/mysql/my.cnf
+	echo "    log-bin=/databases/mysql/binlog/mysql-bin" 		>> /databases/mysql/my.cnf
+	echo "    relay-log = /databases/mysql/binlog/reley/relaylog" 	>> /databases/mysql/my.cnf
+	echo "" 							>> /databases/mysql/my.cnf
+	echo "    # Performance Analsys" 				>> /databases/mysql/my.cnf
+	echo "    performance_schema = off" 				>> /databases/mysql/my.cnf
+	echo "" 							>> /databases/mysql/my.cnf
+	echo "# Replicacao" 						>> /databases/mysql/my.cnf
+	echo "    #slave_parallel_workers =  8"				>> /databases/mysql/my.cnf
+	echo "    #binlog_format =  ROW" 				>> /databases/mysql/my.cnf
+	echo "    #binlog_row_image =  MINIMAL" 			>> /databases/mysql/my.cnf
+	echo "    #log_bin_trust_function_creators =  on" 		>> /databases/mysql/my.cnf
+	echo "    # Read only" 						>> /databases/mysql/my.cnf
+	echo "        #super_read_only = OFF" 				>> /databases/mysql/my.cnf
+	echo "        #read_only = OFF" 				>> /databases/mysql/my.cnf
+	echo "# Logs" 							>> /databases/mysql/my.cnf
+	echo "    # log_queries_not_using_indexes   =  on" 		>> /databases/mysql/my.cnf
+	echo "    # long_query_time                 =  3" 		>> /databases/mysql/my.cnf
+	echo "" 							>> /databases/mysql/my.cnf
+	echo "" 							>> /databases/mysql/my.cnf
+	echo "# InnoDB" 						>> /databases/mysql/my.cnf
+	echo "    #innodb_dedicated_server = 1 	# When enabled, autotuning..." >> /databases/mysql/my.cnf
+	echo "" 							>> /databases/mysql/my.cnf
+	echo "    # Redo Log"  						>> /databases/mysql/my.cnf
+	echo "    innodb_log_buffer_size = 4G" 				>> /databases/mysql/my.cnf
+	echo "    innodb_log_group_home_dir = /databases/mysql/inno_log" >> /databases/mysql/my.cnf
+	echo "    innodb_log_files_in_group = 10" 			>> /databases/mysql/my.cnf
+	echo "    innodb_log_file_size = 1024M" 			>> /databases/mysql/my.cnf
+	echo "" 							>> /databases/mysql/my.cnf
+	echo "    # Undo" 						>> /databases/mysql/my.cnf
+	echo "    innodb_data_home_dir = /databases/mysql/bases/" 	>> /databases/mysql/my.cnf
+	echo "    innodb_undo_directory = /databases/mysql/inno_undu/" 	>> /databases/mysql/my.cnf
+	echo "" 							>> /databases/mysql/my.cnf
+	echo "    #Buffer Pool tunning" 				>> /databases/mysql/my.cnf
+	echo "    innodb_buffer_pool_size =  ${BUFFER_POOL}G       # Buffer pool of 100GB for a 120GB server if the connection count is 500 or less, 84GB if max_connections is 10000" >> /databases/mysql/my.cnf
+	echo "    innodb_buffer_pool_instances = 10      # This improves access to pool instances and makes each pool instance 6.25G" >> /databases/mysql/my.cnf
+	echo "    innodb_change_buffer_max_size = 25     # This allows up to 50% of the buffer pool to be used for insert/change buffer" >> /databases/mysql/my.cnf
+	echo "" 							>> /databases/mysql/my.cnf
+	echo "    #Buffer Pool tunning Threads" 			>> /databases/mysql/my.cnf
+	echo "    # innodb_log_writer_threads = ON        # 8.0.22 Enables dedicated log writer threads for writing redo log." >> /databases/mysql/my.cnf
+	echo "    innodb_read_io_threads = 32             # Take advantage of more parallelism" >> /databases/mysql/my.cnf
+	echo "    innodb_write_io_threads = 32            # Take advantage of more parallelism" >> /databases/mysql/my.cnf
+	echo "    innodb_purge_threads = 8" 				>> /databases/mysql/my.cnf
+	echo "    innodb_thread_concurrency =  64" 			>> /databases/mysql/my.cnf
+	echo "    innodb_page_cleaners = 8" 				>> /databases/mysql/my.cnf
+	echo "    innodb_purge_batch_size = 1600" 			>> /databases/mysql/my.cnf
+	echo "    innodb_change_buffer_max_size = 30      # This allows up to 50% of the buffer pool to be used for insert/change buffer" >> /databases/mysql/my.cnf
+	echo "    innodb_concurrency_tickets = 2500       # If you are writing many individual rows and not using multi-row inserts, AND this workload is INSERT heavy." >> /databases/mysql/my.cnf
+	echo "                                            # For workloads that read a lot of rows, the default value of innodb_concurrency_tickets is appropriate." >> /databases/mysql/my.cnf
+	echo "    #Buffer Pool tuning disk" 				>> /databases/mysql/my.cnf
+	echo "    innodb_use_native_aio = 1" 				>> /databases/mysql/my.cnf
+	echo "    innodb_flush_method=O_DIRECT_NO_FSYNC" 		>> /databases/mysql/my.cnf
+	echo "" 							>> /databases/mysql/my.cnf
+	echo "    innodb_flush_neighbors = 2              # Same GCP Config" >> /databases/mysql/my.cnf
+	echo "    innodb_io_capacity = 2000               # Same GCP Config" >> /databases/mysql/my.cnf
+	echo "    innodb_io_capacity_max = 5000" 			>> /databases/mysql/my.cnf
+	echo "    innodb_lru_scan_depth = 2048            # Same GCP Config" >> /databases/mysql/my.cnf
+	echo "    #innodb_purge_batch_size=300            # Same GCP Config" >> /databases/mysql/my.cnf
+	echo "    innodb_file_per_table = 1               # It's split de innofile in one file per table. It helps to improve the performance" >> /databases/mysql/my.cnf
+	echo "    # The following are non-ACID compliant adjustments that will improve performance, but use these settings can affect recoverability of data after a crash" >> /databases/mysql/my.cnf
+	echo "        innodb_doublewrite = 1" 				>> /databases/mysql/my.cnf
+	echo "        sync_binlog =  0" 				>> /databases/mysql/my.cnf
+	echo "        innodb_flush_log_at_trx_commit =  2" 		>> /databases/mysql/my.cnf
 }
 
 install_innotop() {
