@@ -65,7 +65,7 @@ install_dependences(){
 
     		echo "mysql   soft    nofile  1048576" >> /etc/security/limits.conf
     		echo "mysql   hard    nofile  1048576" >> /etc/security/limits.conf
-        fi
+          fi
 
 }
 
