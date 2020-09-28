@@ -73,10 +73,10 @@ install_dependences(){
 
 install_mysql(){
 		adduser mysql
-		echo " Fazendo download do MYSQL 5.7 "
+		echo " Fazendo download do MYSQL 8 "
 		cd /usr/local/
 		wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
-		wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-test-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
+		#wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-test-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
 		#tar -xvf mysql-test-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
 		tar -xvf mysql-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
 		ln -sf mysql-8.0.21-linux-glibc2.17-x86_64-minimal mysql
@@ -298,6 +298,7 @@ pos_install() {
 	sed -i s'/conf=\/etc\/my.cnf/conf=\/databases\/mysql\/my.cnf/g' /etc/init.d/mysql
 	sed -i s'/--datadir=\/databases\/mysql\/bases\/"$datadir"/--datadir="$datadir"/g' /etc/init.d/mysql
 	ln -sf /databases/mysql/my.cnf /etc/my.cnf
+	systemctl enable mysql.service
 
 	chmod +x /etc/init.d/mysql
 	chown mysql:mysql /databases/mysql/ -R
