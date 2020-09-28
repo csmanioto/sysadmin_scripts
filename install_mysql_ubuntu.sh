@@ -15,6 +15,7 @@ install_dependences(){
 	$PGK grc
         $PGK zsh
         $PGK install wget
+	$PGK install sysstat
         $PGK install libncurses5
         $PGK install curl
         $PGK install iputils-ping
