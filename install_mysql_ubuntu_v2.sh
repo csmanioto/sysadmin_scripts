@@ -70,9 +70,8 @@ install_mysql(){
 		adduser mysql
 		cd /usr/local/
 		wget https://cdn.mysql.com//Downloads/MySQL-Shell/mysql-shell-8.0.21-linux-glibc2.12-x86-64bit.tar.gz
-        tar -zxvf mysql-shell-8.0.21-linux-glibc2.12-x86-64bit.tar.gz
-        ln -sf mysql-shell-8.0.21-linux-glibc2.12-x86-64bit mysql-shell
-
+                tar -zxvf mysql-shell-8.0.21-linux-glibc2.12-x86-64bit.tar.gz
+                ln -sf mysql-shell-8.0.21-linux-glibc2.12-x86-64bit mysql-shell
 
 		echo "Select version. 5.7 or 8.0?"
 		read VERSION
