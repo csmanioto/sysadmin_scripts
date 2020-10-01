@@ -13,37 +13,37 @@ install_dependences(){
         $PGK upgrade
         $PGK vim vim-scripts vim-syntastic vim-snippets vim-editorconfig
         $PGK mycli
-		$PGK grc
+	$PGK grc
         $PGK zsh
         $PGK install wget
-		$PGK install net-tools
-		$PGK install sysstat
+	$PGK install net-tools
+	$PGK install sysstat
         $PGK install libncurses5
         $PGK install curl
         $PGK install iputils-ping
-		$PGK install libaio1
-		$PGK install irqbalance
-		$PGK install libdbd-mysql-perl
-		$PGK install libtime-hires-perl
-		$PGK install libterm-readkey-perl
-		$PGK install htop
-		$PGK install atop
-		$PGK install screen
+	$PGK install libaio1
+	$PGK install irqbalance
+	$PGK install libdbd-mysql-perl
+	$PGK install libtime-hires-perl
+	$PGK install libterm-readkey-perl
+	$PGK install htop
+	$PGK install atop
+	$PGK install screen
         $PGK install xfsprogs
         $PGK install build-essential
         $PGK install checkinstall
         $PGK install libterm-readkey-perl
         $PGK install iftop
         $PGK install git
-		$PGK install libdbd-mysql-perl
+	$PGK install libdbd-mysql-perl
         $PGK remove --purge -y percona-xtradb-cluster-server-5.7 percona-xtradb-cluster-garbd-5.7 percona-xtradb-cluster-common-5.7 percona-xtradb-cluster-client-5.7 percona-xtrabackup-24 percona-release
-		$PGK remove --purge -y mysql-common mysql-server
-		rm -rf /etc/mysql
+	$PGK remove --purge -y mysql-common mysql-server
+	rm -rf /etc/mysql
 
-		echo "installing man pages and others"
-		unminimize
+	echo "installing man pages and others"
+	unminimize
 
-	    if [ ! -f /tmp/install_mysql_dependences.ok ]; then
+	if [ ! -f /tmp/install_mysql_dependences.ok ]; then
 			echo "vm.swappiness = 0" > /etc/sysctl.d/mysql.conf
 			echo "net.core.rmem_default = 33554432" >> /etc/sysctl.d/mysql.conf
 			echo "net.core.wmem_default = 33554432" >> /etc/sysctl.d/mysql.conf
@@ -64,7 +64,6 @@ install_dependences(){
         fi
 
 }
-
 
 
 install_mysql(){ 
