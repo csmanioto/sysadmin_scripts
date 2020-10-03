@@ -10,10 +10,10 @@ install_dependences(){
 	echo "Instalando pre-requisitos e Atualizando do Linux"
         $PGK update
         $PGK upgrade
-        $PGK vim vim-scripts vim-syntastic vim-snippets vim-editorconfig
-        $PGK mycli
-	$PGK grc
-        $PGK zsh
+        $PGK install vim vim-scripts vim-syntastic vim-snippets vim-editorconfig
+        $PGK install mycli
+	$PGK install grc
+        $PGK install zsh
         $PGK install wget
 	$PGK install net-tools
 	$PGK install sysstat
@@ -34,21 +34,16 @@ install_dependences(){
         $PGK install libterm-readkey-perl
         $PGK install iftop
         $PGK install git
-	$PGK install libdbd-mysql-perl
         $PGK remove --purge -y percona-xtradb-cluster-server-5.7 percona-xtradb-cluster-garbd-5.7 percona-xtradb-cluster-common-5.7 percona-xtradb-cluster-client-5.7 percona-xtrabackup-24 percona-release
-		$PGK remove --purge -y mysql-common mysql-server
-		rm -rf /etc/mysql
+	$PGK remove --purge -y mysql-common mysql-server
+	$PGK install libdbd-mysql-perl
+	rm -rf /etc/mysql
 
 	echo "installing man pages and others"
 	unminimize
 
-        chsh -s $(which zsh)
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-	    if [ ! -f /tmp/install_mysql_dependences.ok ]; then
-		#sed 's/enabled=0/enabled=1/g' -i /etc/yum.repos.d/CentOS-Base.repo
-		#sed 's/enabled=0/enabled=1/g' -i /etc/yum.repos.d/redhat-rhui.repo
-		#sed 's/SELINUX=enforcing/SELINUX=disabled/g ' -i /etc/selinux/config
+	if [ ! -f /tmp/install_mysql_dependences.ok ]; then
 		echo "vm.swappiness = 0" > /etc/sysctl.d/mysql.conf
 		echo "net.core.rmem_default = 33554432" >> /etc/sysctl.d/mysql.conf
 		echo "net.core.rmem_max = 33554432" >> /etc/sysctl.d/mysql.conf
@@ -72,12 +67,10 @@ install_dependences(){
 
 
 install_mysql(){
-                adduser mysql
-                echo " Fazendo download do MYSQL 5.7 "
+                echo " Fazendo download do MYSQL 8.0 "
                 cd /usr/local/
+		rm -f mysql*.tar.*
                 wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
-                wget https://cdn.mysql.com//Downloads/MySQL-8.0/mysql-test-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
-                #tar -xvf mysql-test-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
                 tar -xvf mysql-8.0.21-linux-glibc2.17-x86_64-minimal.tar.xz
                 ln -sf mysql-8.0.21-linux-glibc2.17-x86_64-minimal mysql
 
@@ -86,8 +79,7 @@ install_mysql(){
                 ln -sf mysql-shell-8.0.21-linux-glibc2.12-x86-64bit mysql-shell
                 cd -
 
-                echo "PATH=$PATH:/usr/local/mysql/bin" > /etc/profile.d/mysql.sh
-                echo "PATH=$PATH:/usr/local/mysql-shell/bin" >> /etc/profile.d/mysql.sh
+                echo "export PATH=$PATH:/usr/local/mysql/bin:/usr/local/mysql-shell/bin" > /etc/profile.d/mysql.sh
                 echo "export MYSQLSH_PROMPT_THEME=/usr/local/mysql-shell/share/mysqlsh/prompt/prompt_256.json" >> /etc/profile.d/mysql.sh
                 chmod 755 /etc/profile.d/mysql.sh
 }
@@ -121,11 +113,11 @@ install_my_cnf (){
 	BUFFER_POOL=$(expr ${MEM_TOTAL} \* $BUFFER_POOL_PORCENT / 100 / 1024)
 
 	echo "###########" 						> /databases/mysql/my.cnf
-	echo "## By Carlos Smaniotto" 					>> /databases/mysql/my.cnf 
-	echo "### my.cnf" 						>> /databases/mysql/my.cnf 
-	echo "" 							>> /databases/mysql/my.cnf 
-	echo ""								>> /databases/mysql/my.cnf 
-	echo "[client]" 						>> /databases/mysql/my.cnf 
+	echo "## By Carlos Smaniotto" 					>> /databases/mysql/my.cnf
+	echo "### my.cnf" 						>> /databases/mysql/my.cnf
+	echo "" 							>> /databases/mysql/my.cnf
+	echo ""								>> /databases/mysql/my.cnf
+	echo "[client]" 						>> /databases/mysql/my.cnf
 	echo "     port = 3306" 					>> /databases/mysql/my.cnf
 	echo "    socket = /databases/mysql/mysql.socket" 		>> /databases/mysql/my.cnf
 	echo "" 							>> /databases/mysql/my.cnf
@@ -157,7 +149,7 @@ install_my_cnf (){
 	echo "    general_log_file = /databases/mysql/logs/general_log.log" >> /databases/mysql/my.cnf
 	echo "    log-error = /databases/mysql/logs/error.log" 		>> /databases/mysql/my.cnf
 	echo "    general_log = 1" 					>> /databases/mysql/my.cnf
-	echo "    log_warnings = 1" 					>> /databases/mysql/my.cnf
+	echo"	  log_error_verbosity = 2"				>> databases/mysql/my.cnf
 	echo "" 							>> /databases/mysql/my.cnf
 	echo "    pid-file = /databases/mysql/bases/mysqld.pid" 	>> /databases/mysql/my.cnf
 	echo "    socket = /databases/mysql/mysqld.sock" 		>> /databases/mysql/my.cnf
@@ -271,12 +263,12 @@ pos_install_perfum() {
 
 
 core(){
-			#install_dependences;
-			#install_mysql;
-			#install_mysql_folders;
-			#install_my_cnf;
+			install_dependences;
+			install_mysql;
+			install_mysql_folders;
+			install_my_cnf;
 			pos_install;
-			#install_innotop;
+			install_innotop;
 
 
 }
