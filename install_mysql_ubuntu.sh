@@ -8,11 +8,10 @@ SERVER_ID=$(shuf -i 1-20 -n 1)
 install_new_kernel(){
 	echo "Install Kernel 5.8.13"
 	cd /usr/local/
-	wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8.13/amd64/linux-headers-5.8.13-050813_5.8.13-050813.202010011235_all.deb
 	wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8.13/amd64/linux-modules-5.8.13-050813-generic_5.8.13-050813.202010011235_amd64.deb
 	wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8.13/amd64/linux-headers-5.8.13-050813-generic_5.8.13-050813.202010011235_amd64.deb
 	wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8.13/amd64/linux-headers-5.8.13-050813_5.8.13-050813.202010011235_all.deb
-	wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8.13/amd64/linux-headers-5.8.13-050813_5.8.13-050813.202010011235_all.deb
+	wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8.13/amd64/linux-image-unsigned-5.8.13-050813-generic_5.8.13-050813.202010011235_amd64.deb
 	dpkg -i *.deb
 	cd - 
 }
