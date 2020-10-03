@@ -5,6 +5,18 @@ INNOTOP_PKG=$(echo $INNOTOP|cut -d'/' -f5)
 INNOTOP_FOLDER=$(echo $INNOTOP_PKG|cut -d'.' -f1-3)
 SERVER_ID=$(shuf -i 1-20 -n 1)
 
+install_new_kernel(){
+	echo "Install Kernel 5.8.13"
+	cd /usr/local/
+	wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8.13/amd64/linux-headers-5.8.13-050813_5.8.13-050813.202010011235_all.deb
+	wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8.13/amd64/linux-modules-5.8.13-050813-generic_5.8.13-050813.202010011235_amd64.deb
+	wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8.13/amd64/linux-headers-5.8.13-050813-generic_5.8.13-050813.202010011235_amd64.deb
+	wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8.13/amd64/linux-headers-5.8.13-050813_5.8.13-050813.202010011235_all.deb
+	wget https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8.13/amd64/linux-headers-5.8.13-050813_5.8.13-050813.202010011235_all.deb
+	dpkg -i *.deb
+	cd - 
+}
+
 install_dependences(){
         PGK="apt -y "
 	echo "Instalando pre-requisitos e Atualizando do Linux"
