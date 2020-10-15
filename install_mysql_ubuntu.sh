@@ -103,7 +103,7 @@ install_mysql_folders() {
 	mkdir -p  /databases/mysql/tmpdir/
 	mkdir -p  /databases/mysql/inno_log
 	mkdir -p  /databases/mysql/inno_undu
-	rm -f /databases/mysql/bases/*
+	# rm -f /databases/mysql/bases/*
 	if [ -f /etc/my.cnf ]; then
 		mv /etc/my.cnf /etc/my.cnf_bkp_infrabanco
 	fi
