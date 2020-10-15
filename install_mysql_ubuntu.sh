@@ -155,6 +155,7 @@ install_my_cnf (){
 	echo "    skip_name_resolve = 1" 				>> /databases/mysql/my.cnf
 	echo "" 							>> /databases/mysql/my.cnf
 	echo "    tmpdir = /databases/mysql/tmpdir" 			>> /databases/mysql/my.cnf
+	echo "    innodb_tmpdir = /databases/mysql/tmpdir" 		>> /databases/mysql/my.cnf
 	echo "    lc-messages-dir = /usr/local/mysql/share/" 		>> /databases/mysql/my.cnf
 	echo "    # LOG" 						>> /databases/mysql/my.cnf
 	echo "    general_log_file = /databases/mysql/logs/general_log.log" >> /databases/mysql/my.cnf
@@ -188,9 +189,9 @@ install_my_cnf (){
 	echo "    #innodb_dedicated_server = 1 	# When enabled, autotuning..." >> /databases/mysql/my.cnf
 	echo "" 							>> /databases/mysql/my.cnf
 	echo "    # Redo Log"  						>> /databases/mysql/my.cnf
-	echo "    innodb_log_buffer_size = 4G" 				>> /databases/mysql/my.cnf
+	echo "    innodb_log_buffer_size = 120M" 			>> /databases/mysql/my.cnf
 	echo "    innodb_log_group_home_dir = /databases/mysql/inno_log" >> /databases/mysql/my.cnf
-	echo "    innodb_log_files_in_group = 10" 			>> /databases/mysql/my.cnf
+	echo "    innodb_log_files_in_group = 1" 			>> /databases/mysql/my.cnf
 	echo "    innodb_log_file_size = 1024M" 			>> /databases/mysql/my.cnf
 	echo "" 							>> /databases/mysql/my.cnf
 	echo "    # Undo" 						>> /databases/mysql/my.cnf
@@ -198,21 +199,21 @@ install_my_cnf (){
 	echo "    innodb_undo_directory = /databases/mysql/inno_undu/" 	>> /databases/mysql/my.cnf
 	echo "" 							>> /databases/mysql/my.cnf
 	echo "    #Buffer Pool tunning" 				>> /databases/mysql/my.cnf
-	echo "    innodb_buffer_pool_size =  ${BUFFER_POOL}G       # Buffer pool of 100GB for a 120GB server if the connection count is 500 or less, 84GB if max_connections is 10000" >> /databases/mysql/my.cnf
-	echo "    innodb_buffer_pool_instances = 10      # This improves access to pool instances and makes each pool instance 6.25G" >> /databases/mysql/my.cnf
-	echo "    innodb_change_buffer_max_size = 25     # This allows up to 50% of the buffer pool to be used for insert/change buffer" >> /databases/mysql/my.cnf
+	echo "    innodb_buffer_pool_size =  ${BUFFER_POOL}G    # Buffer pool of 100GB for a 120GB server if the connection count is 500 or less, 84GB if max_connections is 10000" >> /databases/mysql/my.cnf
+	echo "    innodb_buffer_pool_instances = 2      	# This improves access to pool instances and makes each pool instance 6.25G" >> /databases/mysql/my.cnf
+	echo "    innodb_change_buffer_max_size = 25     	# This allows up to 50% of the buffer pool to be used for insert/change buffer" >> /databases/mysql/my.cnf
 	echo "" 							>> /databases/mysql/my.cnf
 	echo "    #Buffer Pool tunning Threads" 			>> /databases/mysql/my.cnf
-	echo "    # innodb_log_writer_threads = ON        # 8.0.22 Enables dedicated log writer threads for writing redo log." >> /databases/mysql/my.cnf
-	echo "    innodb_read_io_threads = 32             # Take advantage of more parallelism" >> /databases/mysql/my.cnf
-	echo "    innodb_write_io_threads = 32            # Take advantage of more parallelism" >> /databases/mysql/my.cnf
+	echo "    # innodb_log_writer_threads = ON        	# 8.0.22 Enables dedicated log writer threads for writing redo log." >> /databases/mysql/my.cnf
+	echo "    innodb_read_io_threads = 32             	# Take advantage of more parallelism" >> /databases/mysql/my.cnf
+	echo "    innodb_write_io_threads = 32            	# Take advantage of more parallelism" >> /databases/mysql/my.cnf
 	echo "    innodb_purge_threads = 8" 				>> /databases/mysql/my.cnf
 	echo "    innodb_thread_concurrency =  64" 			>> /databases/mysql/my.cnf
 	echo "    innodb_page_cleaners = 8" 				>> /databases/mysql/my.cnf
 	echo "    innodb_purge_batch_size = 1600" 			>> /databases/mysql/my.cnf
-	echo "    innodb_change_buffer_max_size = 30      # This allows up to 50% of the buffer pool to be used for insert/change buffer" >> /databases/mysql/my.cnf
-	echo "    innodb_concurrency_tickets = 2500       # If you are writing many individual rows and not using multi-row inserts, AND this workload is INSERT heavy." >> /databases/mysql/my.cnf
-	echo "                                            # For workloads that read a lot of rows, the default value of innodb_concurrency_tickets is appropriate." >> /databases/mysql/my.cnf
+	echo "    innodb_change_buffer_max_size = 30      	# This allows up to 50% of the buffer pool to be used for insert/change buffer" >> /databases/mysql/my.cnf
+	echo "    innodb_concurrency_tickets = 2500       	# If you are writing many individual rows and not using multi-row inserts, AND this workload is INSERT heavy." >> /databases/mysql/my.cnf
+	echo "                                            	# For workloads that read a lot of rows, the default value of innodb_concurrency_tickets is appropriate." >> /databases/mysql/my.cnf
 	echo "    #Buffer Pool tuning disk" 				>> /databases/mysql/my.cnf
 	echo "    innodb_use_native_aio = 1" 				>> /databases/mysql/my.cnf
 	echo "    innodb_flush_method=O_DIRECT_NO_FSYNC" 		>> /databases/mysql/my.cnf
@@ -224,7 +225,7 @@ install_my_cnf (){
 	echo "    #innodb_purge_batch_size=300            # Same GCP Config" >> /databases/mysql/my.cnf
 	echo "    innodb_file_per_table = 1               # It's split de innofile in one file per table. It helps to improve the performance" >> /databases/mysql/my.cnf
 	echo "    # The following are non-ACID compliant adjustments that will improve performance, but use these settings can affect recoverability of data after a crash" >> /databases/mysql/my.cnf
-	echo "        innodb_doublewrite = 1" 				>> /databases/mysql/my.cnf
+	echo "        innodb_doublewrite = 0" 				>> /databases/mysql/my.cnf
 	echo "        sync_binlog =  0" 				>> /databases/mysql/my.cnf
 	echo "        innodb_flush_log_at_trx_commit =  2" 		>> /databases/mysql/my.cnf
 }
