@@ -101,8 +101,8 @@ install_mysql_folders() {
 	mkdir -p /databases/mysql/bases/
 	mkdir -p /databases/mysql/logs
 	mkdir -p  /databases/mysql/tmpdir/
-	mkdir -p  /databases/mysql/inno_log
-	mkdir -p  /databases/mysql/inno_undu
+	mkdir -p  /databases/mysql/innolog
+	mkdir -p  /databases/mysql/innoundu
 	# rm -f /databases/mysql/bases/*
 	if [ -f /etc/my.cnf ]; then
 		mv /etc/my.cnf /etc/my.cnf_bkp_infrabanco
@@ -167,7 +167,7 @@ install_my_cnf (){
 	echo "    socket = /databases/mysql/mysqld.sock" 		>> /databases/mysql/my.cnf
 	echo "    datadir = /databases/mysql/bases" 			>> /databases/mysql/my.cnf
 	echo "    log-bin=/databases/mysql/binlog/mysql-bin" 		>> /databases/mysql/my.cnf
-	echo "    relay-log = /databases/mysql/binlog/reley/relaylog" 	>> /databases/mysql/my.cnf
+	echo "    relay-log = /databases/mysql/binlog/relay/relaylog" 	>> /databases/mysql/my.cnf
 	echo "" 							>> /databases/mysql/my.cnf
 	echo "    # Performance Analsys" 				>> /databases/mysql/my.cnf
 	echo "    performance_schema = off" 				>> /databases/mysql/my.cnf
@@ -190,13 +190,13 @@ install_my_cnf (){
 	echo "" 							>> /databases/mysql/my.cnf
 	echo "    # Redo Log"  						>> /databases/mysql/my.cnf
 	echo "    innodb_log_buffer_size = 120M" 			>> /databases/mysql/my.cnf
-	echo "    innodb_log_group_home_dir = /databases/mysql/inno_log" >> /databases/mysql/my.cnf
+	echo "    innodb_log_group_home_dir = /databases/mysql/innolog" >> /databases/mysql/my.cnf
 	echo "    innodb_log_files_in_group = 1" 			>> /databases/mysql/my.cnf
 	echo "    innodb_log_file_size = 1024M" 			>> /databases/mysql/my.cnf
 	echo "" 							>> /databases/mysql/my.cnf
 	echo "    # Undo" 						>> /databases/mysql/my.cnf
 	echo "    innodb_data_home_dir = /databases/mysql/bases/" 	>> /databases/mysql/my.cnf
-	echo "    innodb_undo_directory = /databases/mysql/inno_undu/" 	>> /databases/mysql/my.cnf
+	echo "    innodb_undo_directory = /databases/mysql/innoundu/" 	>> /databases/mysql/my.cnf
 	echo "" 							>> /databases/mysql/my.cnf
 	echo "    #Buffer Pool tunning" 				>> /databases/mysql/my.cnf
 	echo "    innodb_buffer_pool_size =  ${BUFFER_POOL}G    # Buffer pool of 100GB for a 120GB server if the connection count is 500 or less, 84GB if max_connections is 10000" >> /databases/mysql/my.cnf
@@ -254,8 +254,8 @@ pos_install() {
 	chown mysql:mysql /databases/mysql/ -R
 	#mysqld --verbose --initialize
 	rm -rf /databases/mysql/binlog/*
-	rm -rf /databases/mysql/inno_log/*
-	rm -rf /databases/mysql/inno_undu/*
+	rm -rf /databases/mysql/innolog/*
+	rm -rf /databases/mysql/innoundu/*
 	rm -rf  /databases/mysql/bases/*
 	rm -rf /databases/mysql/logs/*
 	rm -rf /databases/mysql/tmpdir/*
