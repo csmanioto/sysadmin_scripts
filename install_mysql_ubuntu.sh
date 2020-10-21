@@ -275,6 +275,7 @@ pos_install_perfum() {
 
 
 core(){
+			install_new_kernel;
 			install_dependences;
 			install_mysql;
 			install_mysql_folders;
