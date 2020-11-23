@@ -218,6 +218,9 @@ install_my_cnf (){
 	echo "    innodb_use_native_aio = 1" 				>> /databases/mysql/my.cnf
 	echo "    innodb_flush_method=O_DIRECT_NO_FSYNC" 		>> /databases/mysql/my.cnf
 	echo "" 							>> /databases/mysql/my.cnf
+	echo "    # Controle Transacional" 				>> /databases/mysql/my.cnf 
+	echo "    transaction-isolation=READ-COMMITTED" 		>> /databases/mysql/my.cnf 
+	echo "" 							>> /databases/mysql/my.cnf
 	echo "    innodb_flush_neighbors = 2              # Same GCP Config" >> /databases/mysql/my.cnf
 	echo "    innodb_io_capacity = 2000               # Same GCP Config" >> /databases/mysql/my.cnf
 	echo "    innodb_io_capacity_max = 5000" 			>> /databases/mysql/my.cnf
