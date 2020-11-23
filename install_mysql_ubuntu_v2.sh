@@ -292,6 +292,10 @@ install_my_cnf (){
 			echo "        innodb_support_xa = 0" >> /databases/mysql/my.cnf
 			echo "        # Qtd de segundos antes de um Lock wait timeout exceeded" >> /databases/mysql/my.cnf
 			echo "        innodb_lock_wait_timeout = 120" >> /databases/mysql/my.cnf
+			echo "" 							>> /databases/mysql/my.cnf
+			echo "    # Controle Transacional" 				>> /databases/mysql/my.cnf 
+			echo "    transaction-isolation=READ-COMMITTED" 		>> /databases/mysql/my.cnf 
+			echo "" 							>> /databases/mysql/my.cnf
 	fi
 
 	if [ $INSTALL_VERSION = "8.0" ]; then
@@ -388,6 +392,10 @@ install_my_cnf (){
 			echo "    #Buffer Pool tuning disk" 				>> /databases/mysql/my.cnf
 			echo "    innodb_use_native_aio = 1" 				>> /databases/mysql/my.cnf
 			echo "    innodb_flush_method=O_DIRECT_NO_FSYNC" 		>> /databases/mysql/my.cnf
+			echo "" 							>> /databases/mysql/my.cnf
+			echo "" 							>> /databases/mysql/my.cnf
+			echo "    # Controle Transacional" 				>> /databases/mysql/my.cnf 
+			echo "    transaction-isolation=READ-COMMITTED" 		>> /databases/mysql/my.cnf 
 			echo "" 							>> /databases/mysql/my.cnf
 			echo "    innodb_flush_neighbors = 2              # Same GCP Config" >> /databases/mysql/my.cnf
 			echo "    innodb_io_capacity = 2000               # Same GCP Config" >> /databases/mysql/my.cnf
